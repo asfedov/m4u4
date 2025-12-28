@@ -55,6 +55,20 @@ def random_game(message):
     game = manager.random_game()[0]
     send_game_info(bot, message, game)
 
+@bot.message_handler(commands=['searchid'])
+def search_game(message):
+    parts = message.text.split(maxsplit=1)  
+    if len(parts) < 2:
+        bot.reply_to(message, "Write id of a game")
+        return
+
+    game_id = parts[1].strip()  
+    row = manager.find_game_by_id(game_id)
+    if row:
+        send_game_info(bot, message, row[0])
+    else:
+        bot.send_message(message.chat.id, f"I don't the game with id '{game_id}' 😔")
+
 
 @bot.message_handler(func=lambda message: True)
 def find_game_by_name(message):

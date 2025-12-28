@@ -48,4 +48,9 @@ class DB_Manager:
             SELECT * FROM videogames WHERE name LIKE ?'''
         name_pattern = f'%{name}%'
         return self.__select_data(sql, (name_pattern,))
+    
+    def find_game_by_id(self, id):
+        sql = ''' 
+            SELECT * FROM videogames WHERE id = ?'''
+        return self.__select_data(sql, (id,))
             
